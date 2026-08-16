@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Portfolio</title>
+  <title>Selected Works</title>
   <style>
-    /* CSS Styles */
     :root {
-      --bg-color: #0d0e12;
-      --card-bg: #16181e;
-      --accent: #ff3e3e;
-      --text-main: #ffffff;
-      --text-muted: #9aa0a6;
-      --border-color: #262933;
+      --bg: #0a0a0c;
+      --card-bg: #121316;
+      --accent: #e2e8f0;
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
+      --border: #1e293b;
     }
 
     * {
@@ -22,115 +21,129 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      padding-bottom: 60px;
+      line-height: 1.5;
+      padding: 40px 20px 80px;
     }
 
+    /* Minimalist Header */
     header {
-      text-align: center;
-      padding: 60px 20px 30px;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
     }
 
-    header h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 10px;
+    .brand h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
     }
 
-    header p {
+    .brand p {
       color: var(--text-muted);
-      font-size: 1.1rem;
+      font-size: 0.9rem;
+      margin-top: 4px;
     }
 
-    /* Filter Controls */
+    /* Minimal Filter Nav */
     .filter-container {
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 40px;
+      gap: 16px;
       flex-wrap: wrap;
-      padding: 0 20px;
     }
 
     .filter-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background: none;
+      border: none;
       color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s ease;
+      padding: 4px 0;
+      position: relative;
+      transition: color 0.2s ease;
     }
 
     .filter-btn:hover, .filter-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
     }
 
     /* Gallery Grid */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 20px;
     }
 
     .gallery-item {
       background: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 6px;
       overflow: hidden;
-      border: 1px solid var(--border-color);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
       cursor: pointer;
     }
 
     .gallery-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      transform: translateY(-4px);
+      border-color: #334155;
     }
 
     .img-container {
       width: 100%;
       aspect-ratio: 1 / 1;
       overflow: hidden;
-      background-color: #000;
+      background-color: #050505;
     }
 
     .img-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .gallery-item:hover .img-container img {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .item-info {
-      padding: 16px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .item-info h3 {
-      font-size: 1.1rem;
-      margin-bottom: 4px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
     }
 
     .item-info p {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
     }
 
     /* Lightbox Modal */
@@ -141,7 +154,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(5, 5, 7, 0.95);
+      backdrop-filter: blur(8px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -150,101 +164,117 @@
 
     .modal img {
       max-width: 90%;
-      max-height: 90vh;
+      max-height: 85vh;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 4px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
     }
 
     .modal-close {
       position: absolute;
-      top: 20px;
-      right: 30px;
-      color: #fff;
+      top: 24px;
+      right: 32px;
+      color: var(--text-muted);
       font-size: 2rem;
       cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .filter-btn.active::after {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>DESIGN PORTFOLIO</h1>
-    <p>Graphics, Posters, & Digital Artworks</p>
+    <div class="brand">
+      <h1>Selected Works</h1>
+      <p>Graphic Design & Visual Concepts</p>
+    </div>
+
+    <div class="filter-container">
+      <button class="filter-btn active" onclick="filterGallery('all', event)">All</button>
+      <button class="filter-btn" onclick="filterGallery('cinema', event)">Cinema</button>
+      <button class="filter-btn" onclick="filterGallery('sports', event)">Sports</button>
+      <button class="filter-btn" onclick="filterGallery('commercial', event)">Commercial</button>
+    </div>
   </header>
 
-  <div class="filter-container">
-    <button class="filter-btn active" onclick="filterGallery('all', event)">All</button>
-    <button class="filter-btn" onclick="filterGallery('posters', event)">Posters</button>
-    <button class="filter-btn" onclick="filterGallery('cinema', event)">Cinema</button>
-    <button class="filter-btn" onclick="filterGallery('sports', event)">Sports</button>
-    <button class="filter-btn" onclick="filterGallery('commercial', event)">Commercial</button>
-  </div>
-
   <main class="gallery">
-    <!-- Design 1: Joker -->
+    <!-- Joker -->
     <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
       <div class="img-container">
         <img src="JOKER.png" alt="Joker Poster Design">
       </div>
       <div class="item-info">
-        <h3>Joker — Theatrical Edit</h3>
+        <h3>Joker</h3>
         <p>Cinema</p>
       </div>
     </div>
 
-    <!-- Design 2: Fanta -->
+    <!-- Fanta -->
     <div class="gallery-item" data-category="commercial" onclick="openModal(this)">
       <div class="img-container">
         <img src="FANTA.png" alt="Fanta Commercial Graphic">
       </div>
       <div class="item-info">
-        <h3>Fanta — Pure Orange Juice</h3>
+        <h3>Fanta Concept</h3>
         <p>Commercial</p>
       </div>
     </div>
 
-    <!-- Design 3: Fight Club V2 -->
-    <div class="gallery-item" data-category="cinema posters" onclick="openModal(this)">
+    <!-- Fight Club V2 -->
+    <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
       <div class="img-container">
         <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
       </div>
       <div class="item-info">
-        <h3>Fight Club — Project Mayhem V2</h3>
-        <p>Cinema / Posters</p>
+        <h3>Fight Club (Variant)</h3>
+        <p>Cinema</p>
       </div>
     </div>
 
-    <!-- Design 4: Fight Club -->
-    <div class="gallery-item" data-category="cinema posters" onclick="openModal(this)">
+    <!-- Fight Club -->
+    <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
       <div class="img-container">
         <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
       </div>
       <div class="item-info">
-        <h3>Fight Club — Project Mayhem</h3>
-        <p>Cinema / Posters</p>
+        <h3>Fight Club</h3>
+        <p>Cinema</p>
       </div>
     </div>
 
-    <!-- Design 5: Messi -->
+    <!-- Messi -->
     <div class="gallery-item" data-category="sports" onclick="openModal(this)">
       <div class="img-container">
         <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
       </div>
       <div class="item-info">
-        <h3>Messi — The GOAT</h3>
+        <h3>Messi</h3>
         <p>Sports</p>
       </div>
     </div>
   </main>
 
-  <!-- Lightbox Modal -->
   <div class="modal" id="imageModal" onclick="closeModal()">
     <span class="modal-close">&times;</span>
     <img id="modalImg" src="" alt="Enlarged View">
   </div>
 
   <script>
-    // Filtering Logic
     function filterGallery(category, event) {
       const items = document.querySelectorAll('.gallery-item');
       const buttons = document.querySelectorAll('.filter-btn');
@@ -253,8 +283,8 @@
       event.target.classList.add('active');
 
       items.forEach(item => {
-        const itemCategories = item.getAttribute('data-category').split(' ');
-        if (category === 'all' || itemCategories.includes(category)) {
+        const itemCategory = item.getAttribute('data-category');
+        if (category === 'all' || itemCategory === category) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
@@ -262,7 +292,6 @@
       });
     }
 
-    // Modal Logic
     function openModal(element) {
       const imgSrc = element.querySelector('img').src;
       document.getElementById('modalImg').src = imgSrc;
