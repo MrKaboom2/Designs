@@ -101,7 +101,7 @@
 
     .img-container {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
       background-color: #000;
     }
@@ -173,17 +173,18 @@
   </header>
 
   <div class="filter-container">
-    <button class="filter-btn active" onclick="filterGallery('all')">All</button>
-    <button class="filter-btn" onclick="filterGallery('posters')">Posters</button>
-    <button class="filter-btn" onclick="filterGallery('sports')">Sports</button>
-    <button class="filter-btn" onclick="filterGallery('cinema')">Cinema</button>
+    <button class="filter-btn active" onclick="filterGallery('all', event)">All</button>
+    <button class="filter-btn" onclick="filterGallery('posters', event)">Posters</button>
+    <button class="filter-btn" onclick="filterGallery('cinema', event)">Cinema</button>
+    <button class="filter-btn" onclick="filterGallery('sports', event)">Sports</button>
+    <button class="filter-btn" onclick="filterGallery('commercial', event)">Commercial</button>
   </div>
 
   <main class="gallery">
-    <!-- Design 1 -->
+    <!-- Design 1: Joker -->
     <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
       <div class="img-container">
-        <img src="https://via.placeholder.com/800x1000/111/fff?text=Joker+Poster" alt="Joker Poster Design">
+        <img src="JOKER.png" alt="Joker Poster Design">
       </div>
       <div class="item-info">
         <h3>Joker — Theatrical Edit</h3>
@@ -191,25 +192,47 @@
       </div>
     </div>
 
-    <!-- Design 2 -->
-    <div class="gallery-item" data-category="sports" onclick="openModal(this)">
+    <!-- Design 2: Fanta -->
+    <div class="gallery-item" data-category="commercial" onclick="openModal(this)">
       <div class="img-container">
-        <img src="https://via.placeholder.com/800x1000/004d25/fff?text=Shakib+Al+Hasan" alt="Shakib Al Hasan Graphic">
+        <img src="FANTA.png" alt="Fanta Commercial Graphic">
       </div>
       <div class="item-info">
-        <h3>Shakib Al Hasan — The All Rounder</h3>
-        <p>Sports</p>
+        <h3>Fanta — Pure Orange Juice</h3>
+        <p>Commercial</p>
       </div>
     </div>
 
-    <!-- Design 3 -->
-    <div class="gallery-item" data-category="posters" onclick="openModal(this)">
+    <!-- Design 3: Fight Club V2 -->
+    <div class="gallery-item" data-category="cinema posters" onclick="openModal(this)">
       <div class="img-container">
-        <img src="https://via.placeholder.com/800x1000/222/fff?text=Cyberpunk+Poster" alt="Cyberpunk Concept">
+        <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
       </div>
       <div class="item-info">
-        <h3>Neon City 2077</h3>
-        <p>Posters</p>
+        <h3>Fight Club — Project Mayhem V2</h3>
+        <p>Cinema / Posters</p>
+      </div>
+    </div>
+
+    <!-- Design 4: Fight Club -->
+    <div class="gallery-item" data-category="cinema posters" onclick="openModal(this)">
+      <div class="img-container">
+        <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
+      </div>
+      <div class="item-info">
+        <h3>Fight Club — Project Mayhem</h3>
+        <p>Cinema / Posters</p>
+      </div>
+    </div>
+
+    <!-- Design 5: Messi -->
+    <div class="gallery-item" data-category="sports" onclick="openModal(this)">
+      <div class="img-container">
+        <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
+      </div>
+      <div class="item-info">
+        <h3>Messi — The GOAT</h3>
+        <p>Sports</p>
       </div>
     </div>
   </main>
@@ -222,7 +245,7 @@
 
   <script>
     // Filtering Logic
-    function filterGallery(category) {
+    function filterGallery(category, event) {
       const items = document.querySelectorAll('.gallery-item');
       const buttons = document.querySelectorAll('.filter-btn');
 
@@ -230,7 +253,8 @@
       event.target.classList.add('active');
 
       items.forEach(item => {
-        if (category === 'all' || item.getAttribute('data-category') === category) {
+        const itemCategories = item.getAttribute('data-category').split(' ');
+        if (category === 'all' || itemCategories.includes(category)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
