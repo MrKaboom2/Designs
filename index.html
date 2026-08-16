@@ -3,36 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selected Works</title>
+  <title>Selected Works — Portfolio</title>
   <style>
-    /* Default Theme: Dark Slate */
+    /* Base CSS Variables & Themes */
     :root {
-      --bg: #0a0a0c;
-      --card-bg: #121316;
-      --text-main: #f8fafc;
+      --bg: #090a0f;
+      --card-bg: rgba(22, 24, 33, 0.7);
+      --card-hover: rgba(30, 34, 48, 0.9);
+      --text-main: #f1f5f9;
       --text-muted: #64748b;
-      --border: #1e293b;
-      --accent: #e2e8f0;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #ff3e3e;
+      --glow: rgba(255, 62, 62, 0.15);
+      --glass-bg: rgba(9, 10, 15, 0.75);
     }
 
-    /* Light Theme */
     [data-theme="light"] {
       --bg: #f8fafc;
-      --card-bg: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-hover: rgba(255, 255, 255, 1);
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --border: #e2e8f0;
-      --accent: #0f172a;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #2563eb;
+      --glow: rgba(37, 99, 235, 0.15);
+      --glass-bg: rgba(248, 250, 252, 0.85);
     }
 
-    /* Neon / Cyberpunk Theme */
-    [data-theme="neon"] {
+    [data-theme="cyberpunk"] {
       --bg: #05050a;
-      --card-bg: #0d0e17;
+      --card-bg: rgba(15, 15, 26, 0.8);
+      --card-hover: rgba(25, 25, 45, 0.95);
       --text-main: #00ffcc;
       --text-muted: #ff0055;
-      --border: #ff0055;
-      --accent: #00ffcc;
+      --border: rgba(0, 255, 204, 0.2);
+      --accent: #ff0055;
+      --glow: rgba(255, 0, 85, 0.3);
+      --glass-bg: rgba(5, 5, 10, 0.85);
+    }
+
+    [data-theme="sunset"] {
+      --bg: #120d1c;
+      --card-bg: rgba(30, 20, 45, 0.7);
+      --card-hover: rgba(45, 30, 65, 0.9);
+      --text-main: #ffd166;
+      --text-muted: #f72585;
+      --border: rgba(255, 209, 102, 0.15);
+      --accent: #f72585;
+      --glow: rgba(247, 37, 133, 0.25);
+      --glass-bg: rgba(18, 13, 28, 0.85);
     }
 
     * {
@@ -46,97 +65,155 @@
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
-      padding: 40px 20px 80px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      padding-bottom: 80px;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
+    /* Sticky Glassmorphism Header */
     header {
-      max-width: 1200px;
-      margin: 0 auto 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      margin-bottom: 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 24px;
-      transition: border-color 0.3s ease;
+      transition: border-color 0.4s ease;
     }
 
     .brand h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: 800;
       letter-spacing: -0.5px;
       text-transform: uppercase;
     }
 
     .brand p {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 4px;
+      font-size: 0.85rem;
     }
 
-    /* Theme Picker Dropdown */
-    .theme-selector {
+    /* Controls Bar */
+    .controls-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 8px;
     }
 
-    .theme-selector label {
-      font-size: 0.85rem;
+    .control-group label {
+      font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      font-weight: 600;
     }
 
-    .theme-dropdown {
-      background: var(--card-bg);
+    select, button {
+      background: transparent;
       color: var(--text-main);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 0.9rem;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 500;
       cursor: pointer;
       outline: none;
+    }
+
+    .icon-btn {
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.2s ease;
+    }
+
+    .icon-btn.active {
+      background: var(--border);
+      color: var(--accent);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
       transition: all 0.3s ease;
     }
 
-    /* Masonry / Natural Column Layout */
-    .gallery {
+    /* Masonry Mode */
+    .gallery.masonry {
       column-count: 3;
-      column-gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
+      column-gap: var(--gap, 28px);
     }
 
-    .gallery-item {
+    .gallery.masonry .gallery-item {
       break-inside: avoid;
-      margin-bottom: 24px;
+      margin-bottom: var(--gap, 28px);
+    }
+
+    /* Grid Mode */
+    .gallery.grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--gap, 28px);
+    }
+
+    /* Card Styling */
+    .gallery-item {
       background: var(--card-bg);
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
     .gallery-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--glow);
     }
 
     .img-container {
       width: 100%;
+      overflow: hidden;
     }
 
-    /* Fully uncropped image display */
     .img-container img {
       width: 100%;
       height: auto;
       display: block;
-      object-fit: contain;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-item:hover .img-container img {
+      transform: scale(1.03);
     }
 
     .item-info {
       padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      transition: border-color 0.4s ease;
+    }
+
+    .item-info.hidden {
+      display: none;
     }
 
     .item-info h3 {
@@ -145,21 +222,19 @@
       letter-spacing: -0.2px;
     }
 
-    @media (max-width: 900px) {
-      .gallery {
-        column-count: 2;
-      }
+    @media (max-width: 1024px) {
+      .gallery.masonry { column-count: 2; }
     }
 
-    @media (max-width: 600px) {
-      .gallery {
-        column-count: 1;
-      }
+    @media (max-width: 650px) {
       header {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
+        padding: 20px;
       }
+      main { padding: 0 20px; }
+      .gallery.masonry { column-count: 1; }
     }
   </style>
 </head>
@@ -168,78 +243,156 @@
   <header>
     <div class="brand">
       <h1>Selected Works</h1>
-      <p>Graphic Design & Visual Concepts</p>
+      <p>Design & Visual Artworks</p>
     </div>
 
-    <div class="theme-selector">
-      <label for="themeSelect">Theme:</label>
-      <select id="themeSelect" class="theme-dropdown" onchange="changeTheme(this.value)">
-        <option value="dark">Dark Slate</option>
-        <option value="light">Minimal Light</option>
-        <option value="neon">Cyberpunk Neon</option>
-      </select>
+    <div class="controls-bar">
+      <!-- Layout Switcher -->
+      <div class="control-group">
+        <label>Layout:</label>
+        <button id="masonryBtn" class="icon-btn active" onclick="setLayout('masonry')">Masonry</button>
+        <button id="gridBtn" class="icon-btn" onclick="setLayout('grid')">Grid</button>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="control-group">
+        <label>Theme:</label>
+        <select id="themeSelect" onchange="setTheme(this.value)">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+          <option value="cyberpunk">Cyberpunk</option>
+          <option value="sunset">Sunset</option>
+        </select>
+      </div>
+
+      <!-- Density Switcher -->
+      <div class="control-group">
+        <label>Density:</label>
+        <select id="densitySelect" onchange="setDensity(this.value)">
+          <option value="comfortable">Comfortable</option>
+          <option value="compact">Compact</option>
+        </select>
+      </div>
+
+      <!-- Info Toggle -->
+      <div class="control-group">
+        <label>Titles:</label>
+        <button id="titleBtn" class="icon-btn active" onclick="toggleTitles()">Show</button>
+      </div>
     </div>
   </header>
 
-  <main class="gallery">
-    <!-- Joker -->
-    <div class="gallery-item">
-      <div class="img-container">
-        <img src="JOKER.png" alt="Joker Poster Design">
+  <main>
+    <div class="gallery masonry" id="gallery">
+      <!-- Joker -->
+      <div class="gallery-item">
+        <div class="img-container">
+          <img src="JOKER.png" alt="Joker Poster Design">
+        </div>
+        <div class="item-info">
+          <h3>Joker — Cinematic Edit</h3>
+        </div>
       </div>
-      <div class="item-info">
-        <h3>Joker</h3>
-      </div>
-    </div>
 
-    <!-- Fanta -->
-    <div class="gallery-item">
-      <div class="img-container">
-        <img src="FANTA.png" alt="Fanta Commercial Graphic">
+      <!-- Fanta -->
+      <div class="gallery-item">
+        <div class="img-container">
+          <img src="FANTA.png" alt="Fanta Commercial Graphic">
+        </div>
+        <div class="item-info">
+          <h3>Fanta — Commercial Concept</h3>
+        </div>
       </div>
-      <div class="item-info">
-        <h3>Fanta Concept</h3>
-      </div>
-    </div>
 
-    <!-- Fight Club V2 -->
-    <div class="gallery-item">
-      <div class="img-container">
-        <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
+      <!-- Fight Club V2 -->
+      <div class="gallery-item">
+        <div class="img-container">
+          <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
+        </div>
+        <div class="item-info">
+          <h3>Fight Club — Variant</h3>
+        </div>
       </div>
-      <div class="item-info">
-        <h3>Fight Club (Variant)</h3>
-      </div>
-    </div>
 
-    <!-- Fight Club -->
-    <div class="gallery-item">
-      <div class="img-container">
-        <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
+      <!-- Fight Club -->
+      <div class="gallery-item">
+        <div class="img-container">
+          <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
+        </div>
+        <div class="item-info">
+          <h3>Fight Club — Classic</h3>
+        </div>
       </div>
-      <div class="item-info">
-        <h3>Fight Club</h3>
-      </div>
-    </div>
 
-    <!-- Messi -->
-    <div class="gallery-item">
-      <div class="img-container">
-        <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
-      </div>
-      <div class="item-info">
-        <h3>Messi</h3>
+      <!-- Messi -->
+      <div class="gallery-item">
+        <div class="img-container">
+          <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
+        </div>
+        <div class="item-info">
+          <h3>Messi — The GOAT</h3>
+        </div>
       </div>
     </div>
   </main>
 
   <script>
-    function changeTheme(themeName) {
-      if (themeName === 'dark') {
+    // Layout Logic
+    function setLayout(mode) {
+      const gallery = document.getElementById('gallery');
+      const masonryBtn = document.getElementById('masonryBtn');
+      const gridBtn = document.getElementById('gridBtn');
+
+      if (mode === 'grid') {
+        gallery.classList.remove('masonry');
+        gallery.classList.add('grid');
+        gridBtn.classList.add('active');
+        masonryBtn.classList.remove('active');
+      } else {
+        gallery.classList.remove('grid');
+        gallery.classList.add('masonry');
+        masonryBtn.classList.add('active');
+        gridBtn.classList.remove('active');
+      }
+    }
+
+    // Theme Logic
+    function setTheme(theme) {
+      if (theme === 'dark') {
         document.documentElement.removeAttribute('data-theme');
       } else {
-        document.documentElement.setAttribute('data-theme', themeName);
+        document.documentElement.setAttribute('data-theme', theme);
       }
+    }
+
+    // Density / Spacing Logic
+    function setDensity(density) {
+      const root = document.documentElement;
+      if (density === 'compact') {
+        root.style.setProperty('--gap', '14px');
+      } else {
+        root.style.setProperty('--gap', '28px');
+      }
+    }
+
+    // Toggle Titles
+    let showTitles = true;
+    function toggleTitles() {
+      showTitles = !showTitles;
+      const infos = document.querySelectorAll('.item-info');
+      const titleBtn = document.getElementById('titleBtn');
+
+      infos.forEach(info => {
+        if (showTitles) {
+          info.classList.remove('hidden');
+          titleBtn.classList.add('active');
+          titleBtn.innerText = 'Show';
+        } else {
+          info.classList.add('hidden');
+          titleBtn.classList.remove('active');
+          titleBtn.innerText = 'Hide';
+        }
+      });
     }
   </script>
 </body>
