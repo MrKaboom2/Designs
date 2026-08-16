@@ -5,13 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selected Works</title>
   <style>
+    /* Default Theme: Dark Slate */
     :root {
       --bg: #0a0a0c;
       --card-bg: #121316;
-      --accent: #e2e8f0;
       --text-main: #f8fafc;
       --text-muted: #64748b;
       --border: #1e293b;
+      --accent: #e2e8f0;
+    }
+
+    /* Light Theme */
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #0f172a;
+    }
+
+    /* Neon / Cyberpunk Theme */
+    [data-theme="neon"] {
+      --bg: #05050a;
+      --card-bg: #0d0e17;
+      --text-main: #00ffcc;
+      --text-muted: #ff0055;
+      --border: #ff0055;
+      --accent: #00ffcc;
     }
 
     * {
@@ -26,17 +47,18 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
       padding: 40px 20px 80px;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Minimalist Header */
     header {
       max-width: 1200px;
       margin: 0 auto 50px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
       border-bottom: 1px solid var(--border);
       padding-bottom: 24px;
+      transition: border-color 0.3s ease;
     }
 
     .brand h1 {
@@ -52,85 +74,69 @@
       margin-top: 4px;
     }
 
-    /* Minimal Filter Nav */
-    .filter-container {
+    /* Theme Picker Dropdown */
+    .theme-selector {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
     }
 
-    .filter-btn {
-      background: none;
-      border: none;
+    .theme-selector label {
+      font-size: 0.85rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 4px 0;
-      position: relative;
-      transition: color 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .filter-btn:hover, .filter-btn.active {
+    .theme-dropdown {
+      background: var(--card-bg);
       color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease;
     }
 
-    .filter-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -24px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: var(--text-main);
-    }
-
-    /* Gallery Grid */
+    /* Masonry / Natural Column Layout */
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 32px;
+      column-count: 3;
+      column-gap: 24px;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 24px;
       background: var(--card-bg);
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
       border: 1px solid var(--border);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .gallery-item:hover {
       transform: translateY(-4px);
-      border-color: #334155;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     }
 
     .img-container {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      background-color: #050505;
     }
 
+    /* Fully uncropped image display */
     .img-container img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .gallery-item:hover .img-container img {
-      transform: scale(1.03);
+      height: auto;
+      display: block;
+      object-fit: contain;
     }
 
     .item-info {
       padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .item-info h3 {
@@ -139,59 +145,20 @@
       letter-spacing: -0.2px;
     }
 
-    .item-info p {
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+    @media (max-width: 900px) {
+      .gallery {
+        column-count: 2;
+      }
     }
 
-    /* Lightbox Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(5, 5, 7, 0.95);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal img {
-      max-width: 90%;
-      max-height: 85vh;
-      object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 24px;
-      right: 32px;
-      color: var(--text-muted);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: color 0.2s ease;
-    }
-
-    .modal-close:hover {
-      color: var(--text-main);
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
+      .gallery {
+        column-count: 1;
+      }
       header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
-      }
-      .filter-btn.active::after {
-        display: none;
+        gap: 16px;
       }
     }
   </style>
@@ -204,102 +171,75 @@
       <p>Graphic Design & Visual Concepts</p>
     </div>
 
-    <div class="filter-container">
-      <button class="filter-btn active" onclick="filterGallery('all', event)">All</button>
-      <button class="filter-btn" onclick="filterGallery('cinema', event)">Cinema</button>
-      <button class="filter-btn" onclick="filterGallery('sports', event)">Sports</button>
-      <button class="filter-btn" onclick="filterGallery('commercial', event)">Commercial</button>
+    <div class="theme-selector">
+      <label for="themeSelect">Theme:</label>
+      <select id="themeSelect" class="theme-dropdown" onchange="changeTheme(this.value)">
+        <option value="dark">Dark Slate</option>
+        <option value="light">Minimal Light</option>
+        <option value="neon">Cyberpunk Neon</option>
+      </select>
     </div>
   </header>
 
   <main class="gallery">
     <!-- Joker -->
-    <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
+    <div class="gallery-item">
       <div class="img-container">
         <img src="JOKER.png" alt="Joker Poster Design">
       </div>
       <div class="item-info">
         <h3>Joker</h3>
-        <p>Cinema</p>
       </div>
     </div>
 
     <!-- Fanta -->
-    <div class="gallery-item" data-category="commercial" onclick="openModal(this)">
+    <div class="gallery-item">
       <div class="img-container">
         <img src="FANTA.png" alt="Fanta Commercial Graphic">
       </div>
       <div class="item-info">
         <h3>Fanta Concept</h3>
-        <p>Commercial</p>
       </div>
     </div>
 
     <!-- Fight Club V2 -->
-    <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
+    <div class="gallery-item">
       <div class="img-container">
         <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
       </div>
       <div class="item-info">
         <h3>Fight Club (Variant)</h3>
-        <p>Cinema</p>
       </div>
     </div>
 
     <!-- Fight Club -->
-    <div class="gallery-item" data-category="cinema" onclick="openModal(this)">
+    <div class="gallery-item">
       <div class="img-container">
         <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
       </div>
       <div class="item-info">
         <h3>Fight Club</h3>
-        <p>Cinema</p>
       </div>
     </div>
 
     <!-- Messi -->
-    <div class="gallery-item" data-category="sports" onclick="openModal(this)">
+    <div class="gallery-item">
       <div class="img-container">
         <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
       </div>
       <div class="item-info">
         <h3>Messi</h3>
-        <p>Sports</p>
       </div>
     </div>
   </main>
 
-  <div class="modal" id="imageModal" onclick="closeModal()">
-    <span class="modal-close">&times;</span>
-    <img id="modalImg" src="" alt="Enlarged View">
-  </div>
-
   <script>
-    function filterGallery(category, event) {
-      const items = document.querySelectorAll('.gallery-item');
-      const buttons = document.querySelectorAll('.filter-btn');
-
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-
-      items.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        if (category === 'all' || itemCategory === category) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    }
-
-    function openModal(element) {
-      const imgSrc = element.querySelector('img').src;
-      document.getElementById('modalImg').src = imgSrc;
-      document.getElementById('imageModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('imageModal').style.display = 'none';
+    function changeTheme(themeName) {
+      if (themeName === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', themeName);
+      }
     }
   </script>
 </body>
