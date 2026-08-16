@@ -5,356 +5,379 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selected Works</title>
   <style>
-    /* CSS Variables & Themes */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
     :root {
-      --bg: #090a0f;
-      --card-bg: #12141c;
-      --card-hover: #181b26;
+      --bg: #07080a;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(255, 255, 255, 0.07);
       --text-main: #f8fafc;
       --text-muted: #64748b;
-      --border: #1e293b;
-      --accent: #ff3e3e;
-      --glow: rgba(255, 62, 62, 0.12);
-      --glass-bg: rgba(9, 10, 15, 0.85);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      --pill-bg: rgba(255, 255, 255, 0.04);
+      --pill-active: rgba(255, 255, 255, 0.12);
+      --glass-nav: rgba(7, 8, 10, 0.7);
     }
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --card-hover: #f1f5f9;
+      --card-bg: rgba(0, 0, 0, 0.02);
+      --card-border: rgba(0, 0, 0, 0.08);
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --border: #e2e8f0;
       --accent: #2563eb;
-      --glow: rgba(37, 99, 235, 0.12);
-      --glass-bg: rgba(248, 250, 252, 0.85);
+      --accent-glow: rgba(37, 99, 235, 0.2);
+      --pill-bg: rgba(0, 0, 0, 0.05);
+      --pill-active: rgba(0, 0, 0, 0.12);
+      --glass-nav: rgba(248, 250, 252, 0.7);
     }
 
     [data-theme="cyberpunk"] {
-      --bg: #05050a;
-      --card-bg: #0d0e17;
-      --card-hover: #141524;
+      --bg: #030308;
+      --card-bg: rgba(0, 255, 204, 0.03);
+      --card-border: rgba(0, 255, 204, 0.15);
       --text-main: #00ffcc;
       --text-muted: #ff0055;
-      --border: rgba(0, 255, 204, 0.2);
       --accent: #ff0055;
-      --glow: rgba(255, 0, 85, 0.25);
-      --glass-bg: rgba(5, 5, 10, 0.85);
-    }
-
-    [data-theme="sunset"] {
-      --bg: #120d1c;
-      --card-bg: #1e142d;
-      --card-hover: #291b3d;
-      --text-main: #ffd166;
-      --text-muted: #f72585;
-      --border: rgba(255, 209, 102, 0.15);
-      --accent: #f72585;
-      --glow: rgba(247, 37, 133, 0.2);
-      --glass-bg: rgba(18, 13, 28, 0.85);
+      --accent-glow: rgba(255, 0, 85, 0.4);
+      --pill-bg: rgba(0, 255, 204, 0.05);
+      --pill-active: rgba(255, 0, 85, 0.2);
+      --glass-nav: rgba(3, 3, 8, 0.75);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      padding-bottom: 100px;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      padding-bottom: 120px;
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
     }
 
-    /* Clean, Organized Top Bar */
-    header {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 40px 40px 20px;
+    /* Floating Ultra-Modern Header */
+    nav {
+      position: sticky;
+      top: 24px;
+      z-index: 100;
+      max-width: 1280px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      background: var(--glass-nav);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-glow);
     }
 
     .brand h1 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      text-transform: uppercase;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
     }
 
-    .brand p {
+    .brand span {
       color: var(--text-muted);
+      font-weight: 400;
       font-size: 0.9rem;
-      margin-top: 2px;
     }
 
-    /* Sticky Control Toolbar */
-    .toolbar-container {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 40px;
-      margin-bottom: 50px;
-      transition: border-color 0.4s ease;
-    }
-
-    .controls-bar {
-      max-width: 1400px;
-      margin: 0 auto;
+    /* Modern Control Segmented Controls (No native selects) */
+    .controls {
       display: flex;
-      gap: 24px;
+      gap: 12px;
       align-items: center;
-      justify-content: flex-end;
       flex-wrap: wrap;
     }
 
-    .control-group {
+    .segmented-group {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 8px;
-      transition: background 0.4s ease, border-color 0.4s ease;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      padding: 3px;
+      border-radius: 12px;
     }
 
-    .control-group label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-    }
-
-    select, button {
+    .pill-btn {
       background: transparent;
-      color: var(--text-main);
       border: none;
-      font-size: 0.85rem;
-      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9px;
       cursor: pointer;
-      outline: none;
+      transition: all 0.25s ease;
     }
 
-    .icon-btn {
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
+    .pill-btn:hover {
+      color: var(--text-main);
     }
 
-    .icon-btn.active {
-      background: var(--border);
-      color: var(--accent);
+    .pill-btn.active {
+      background: var(--pill-active);
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Main Container & Gallery */
+    /* Main Content Container */
     main {
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
     }
 
-    /* Masonry Mode */
+    /* MASONRY LAYOUT: Preserves natural image aspect ratios in columns */
     .gallery.masonry {
       column-count: 3;
-      column-gap: var(--gap, 36px);
+      column-gap: var(--gap, 28px);
     }
 
-    .gallery.masonry .gallery-item {
+    .gallery.masonry .card {
       break-inside: avoid;
-      margin-bottom: var(--gap, 36px);
+      margin-bottom: var(--gap, 28px);
     }
 
-    /* Grid Mode */
+    .gallery.masonry .img-wrapper {
+      height: auto;
+    }
+
+    .gallery.masonry .img-wrapper img {
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* GRID LAYOUT: Forces uniform aspect ratio (Uniform Square Grid) */
     .gallery.grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: var(--gap, 36px);
+      gap: var(--gap, 28px);
     }
 
-    /* Card Styling */
-    .gallery-item {
+    .gallery.grid .card {
+      margin-bottom: 0;
+    }
+
+    .gallery.grid .img-wrapper {
+      aspect-ratio: 4 / 5;
+    }
+
+    .gallery.grid .img-wrapper img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Ultra-Sleek Card Design */
+    .card {
       background: var(--card-bg);
-      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
-    .gallery-item:hover {
-      transform: translateY(-6px);
-      background: var(--card-hover);
+    .card:hover {
+      transform: translateY(-8px) scale(1.01);
       border-color: var(--accent);
-      box-shadow: 0 16px 36px var(--glow);
+      box-shadow: 0 20px 40px -15px var(--accent-glow);
     }
 
-    .img-container {
+    .img-wrapper {
       width: 100%;
       overflow: hidden;
+      position: relative;
+      background: rgba(0, 0, 0, 0.2);
     }
 
-    .img-container img {
+    .img-wrapper img {
       width: 100%;
-      height: auto;
       display: block;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .gallery-item:hover .img-container img {
-      transform: scale(1.02);
+    .card:hover .img-wrapper img {
+      transform: scale(1.05);
     }
 
-    .item-info {
-      padding: 18px 22px;
+    .card-info {
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--border);
-      transition: border-color 0.4s ease;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+      transition: opacity 0.3s ease;
     }
 
-    .item-info.hidden {
+    .card-info.hidden {
       display: none;
     }
 
-    .item-info h3 {
-      font-size: 0.95rem;
+    .card-info h3 {
+      font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: -0.2px;
     }
 
-    @media (max-width: 1024px) {
-      .gallery.masonry { column-count: 2; }
+    .card-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      font-weight: 700;
     }
 
-    @media (max-width: 650px) {
-      header, .toolbar-container, main { padding-left: 20px; padding-right: 20px; }
-      header { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .controls-bar { justify-content: flex-start; gap: 12px; }
+    @media (max-width: 960px) {
+      .gallery.masonry { column-count: 2; }
+      .nav-inner { flex-direction: column; gap: 16px; align-items: stretch; }
+      .controls { justify-content: space-between; }
+    }
+
+    @media (max-width: 600px) {
       .gallery.masonry { column-count: 1; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .segmented-group { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand">
-      <h1>Selected Works</h1>
-      <p>Design & Visual Artworks</p>
-    </div>
-  </header>
-
-  <div class="toolbar-container">
-    <div class="controls-bar">
-      <!-- Layout Switcher -->
-      <div class="control-group">
-        <label>Layout</label>
-        <button id="masonryBtn" class="icon-btn active" onclick="setLayout('masonry')">Masonry</button>
-        <button id="gridBtn" class="icon-btn" onclick="setLayout('grid')">Grid</button>
+  <!-- Floating Nav Controls -->
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <h1>Selected Works <span>/ Visuals</span></h1>
       </div>
 
-      <!-- Theme Switcher -->
-      <div class="control-group">
-        <label>Theme</label>
-        <select id="themeSelect" onchange="setTheme(this.value)">
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
-          <option value="cyberpunk">Cyberpunk</option>
-          <option value="sunset">Sunset</option>
-        </select>
-      </div>
+      <div class="controls">
+        <!-- True Masonry vs Uniform Grid Switcher -->
+        <div class="segmented-group">
+          <button class="pill-btn active" id="btnMasonry" onclick="setLayout('masonry')">Masonry</button>
+          <button class="pill-btn" id="btnGrid" onclick="setLayout('grid')">Uniform Grid</button>
+        </div>
 
-      <!-- Spacing Switcher -->
-      <div class="control-group">
-        <label>Spacing</label>
-        <select id="densitySelect" onchange="setDensity(this.value)">
-          <option value="comfortable">Comfortable</option>
-          <option value="compact">Compact</option>
-        </select>
-      </div>
+        <!-- Custom Theme Segment -->
+        <div class="segmented-group">
+          <button class="pill-btn active" onclick="setTheme('dark', this)">Dark</button>
+          <button class="pill-btn" onclick="setTheme('light', this)">Light</button>
+          <button class="pill-btn" onclick="setTheme('cyberpunk', this)">Neon</button>
+        </div>
 
-      <!-- Info Toggle -->
-      <div class="control-group">
-        <label>Titles</label>
-        <button id="titleBtn" class="icon-btn active" onclick="toggleTitles()">Show</button>
+        <!-- Density Segment -->
+        <div class="segmented-group">
+          <button class="pill-btn active" onclick="setSpacing('comfortable', this)">Comfort</button>
+          <button class="pill-btn" onclick="setSpacing('compact', this)">Compact</button>
+        </div>
+
+        <!-- Title Toggle -->
+        <div class="segmented-group">
+          <button class="pill-btn active" id="btnTitles" onclick="toggleTitles()">Titles</button>
+        </div>
       </div>
     </div>
-  </div>
+  </nav>
 
   <main>
     <div class="gallery masonry" id="gallery">
       <!-- Fanta -->
-      <div class="gallery-item">
-        <div class="img-container">
-          <img src="FANTA.png" alt="Fanta Commercial Graphic">
+      <div class="card">
+        <div class="img-wrapper">
+          <img src="FANTA.png" alt="Fanta Commercial Design">
         </div>
-        <div class="item-info">
-          <h3>Fanta — Commercial Concept</h3>
+        <div class="card-info">
+          <h3>Fanta Commercial Concept</h3>
+          <span class="card-tag">Brand</span>
         </div>
       </div>
 
       <!-- Fight Club V2 -->
-      <div class="gallery-item">
-        <div class="img-container">
-          <img src="FIGHT CLUB V2.png" alt="Fight Club Project Mayhem Poster V2">
+      <div class="card">
+        <div class="img-wrapper">
+          <img src="FIGHT CLUB V2.png" alt="Fight Club Poster Variant">
         </div>
-        <div class="item-info">
+        <div class="card-info">
           <h3>Fight Club — Variant</h3>
+          <span class="card-tag">Poster</span>
         </div>
       </div>
 
-      <!-- Fight Club -->
-      <div class="gallery-item">
-        <div class="img-container">
-          <img src="FIGHT CLUB.png" alt="Fight Club Project Mayhem Poster">
+      <!-- Fight Club Classic -->
+      <div class="card">
+        <div class="img-wrapper">
+          <img src="FIGHT CLUB.png" alt="Fight Club Classic Poster">
         </div>
-        <div class="item-info">
+        <div class="card-info">
           <h3>Fight Club — Classic</h3>
+          <span class="card-tag">Poster</span>
         </div>
       </div>
 
       <!-- Messi -->
-      <div class="gallery-item">
-        <div class="img-container">
-          <img src="MESSI.png" alt="Messi GOAT World Cup Poster">
+      <div class="card">
+        <div class="img-wrapper">
+          <img src="MESSI.png" alt="Messi GOAT Edition">
         </div>
-        <div class="item-info">
-          <h3>Messi — The GOAT</h3>
+        <div class="card-info">
+          <h3>Messi — The GOAT Edition</h3>
+          <span class="card-tag">Sports</span>
         </div>
       </div>
     </div>
   </main>
 
   <script>
+    // Distinct Masonry vs Uniform Grid Logic
     function setLayout(mode) {
       const gallery = document.getElementById('gallery');
-      const masonryBtn = document.getElementById('masonryBtn');
-      const gridBtn = document.getElementById('gridBtn');
+      const btnMasonry = document.getElementById('btnMasonry');
+      const btnGrid = document.getElementById('btnGrid');
 
       if (mode === 'grid') {
-        gallery.classList.remove('masonry');
-        gallery.classList.add('grid');
-        gridBtn.classList.add('active');
-        masonryBtn.classList.remove('active');
+        gallery.className = 'gallery grid';
+        btnGrid.classList.add('active');
+        btnMasonry.classList.remove('active');
       } else {
-        gallery.classList.remove('grid');
-        gallery.classList.add('masonry');
-        masonryBtn.classList.add('active');
-        gridBtn.classList.remove('active');
+        gallery.className = 'gallery masonry';
+        btnMasonry.classList.add('active');
+        btnGrid.classList.remove('active');
       }
     }
 
-    function setTheme(theme) {
+    // Modern Segmented Theme Toggle
+    function setTheme(theme, btn) {
+      btn.parentElement.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
       if (theme === 'dark') {
         document.documentElement.removeAttribute('data-theme');
       } else {
@@ -362,32 +385,24 @@
       }
     }
 
-    function setDensity(density) {
+    // Spacing Handler
+    function setSpacing(density, btn) {
+      btn.parentElement.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
       const root = document.documentElement;
-      if (density === 'compact') {
-        root.style.setProperty('--gap', '18px');
-      } else {
-        root.style.setProperty('--gap', '36px');
-      }
+      root.style.setProperty('--gap', density === 'compact' ? '14px' : '28px');
     }
 
-    let showTitles = true;
+    // Title Toggle
+    let titlesVisible = true;
     function toggleTitles() {
-      showTitles = !showTitles;
-      const infos = document.querySelectorAll('.item-info');
-      const titleBtn = document.getElementById('titleBtn');
+      titlesVisible = !titlesVisible;
+      const infos = document.querySelectorAll('.card-info');
+      const btn = document.getElementById('btnTitles');
 
-      infos.forEach(info => {
-        if (showTitles) {
-          info.classList.remove('hidden');
-          titleBtn.classList.add('active');
-          titleBtn.innerText = 'Show';
-        } else {
-          info.classList.add('hidden');
-          titleBtn.classList.remove('active');
-          titleBtn.innerText = 'Hide';
-        }
-      });
+      infos.forEach(info => info.classList.toggle('hidden', !titlesVisible));
+      btn.classList.toggle('active', titlesVisible);
     }
   </script>
 </body>
