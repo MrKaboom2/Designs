@@ -3,34 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selected Works</title>
+  <title>Selected Works — Portfolio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
     :root {
-      --bg: #07080a;
-      --card-bg: rgba(255, 255, 255, 0.02);
-      --card-border: rgba(255, 255, 255, 0.07);
+      --bg: #030407;
+      --card-bg: rgba(18, 20, 29, 0.4);
+      --card-border: rgba(255, 255, 255, 0.08);
       --text-main: #f8fafc;
-      --text-muted: #64748b;
+      --text-muted: #94a3b8;
       --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.3);
-      --pill-bg: rgba(255, 255, 255, 0.04);
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --pill-bg: rgba(255, 255, 255, 0.03);
+      --pill-border: rgba(255, 255, 255, 0.06);
       --pill-active: rgba(255, 255, 255, 0.12);
-      --glass-nav: rgba(7, 8, 10, 0.7);
+      --glass-nav: rgba(10, 12, 18, 0.65);
+      --glow-1: rgba(99, 102, 241, 0.15);
+      --glow-2: rgba(236, 72, 153, 0.12);
     }
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --card-bg: rgba(0, 0, 0, 0.02);
+      --card-bg: rgba(255, 255, 255, 0.7);
       --card-border: rgba(0, 0, 0, 0.08);
       --text-main: #0f172a;
       --text-muted: #64748b;
       --accent: #2563eb;
-      --accent-glow: rgba(37, 99, 235, 0.2);
-      --pill-bg: rgba(0, 0, 0, 0.05);
-      --pill-active: rgba(0, 0, 0, 0.12);
-      --glass-nav: rgba(248, 250, 252, 0.7);
+      --accent-glow: rgba(37, 99, 235, 0.25);
+      --pill-bg: rgba(0, 0, 0, 0.04);
+      --pill-border: rgba(0, 0, 0, 0.06);
+      --pill-active: rgba(0, 0, 0, 0.1);
+      --glass-nav: rgba(248, 250, 252, 0.75);
+      --glow-1: rgba(37, 99, 235, 0.08);
+      --glow-2: rgba(147, 51, 234, 0.06);
     }
 
     [data-theme="cyberpunk"] {
@@ -40,10 +46,13 @@
       --text-main: #00ffcc;
       --text-muted: #ff0055;
       --accent: #ff0055;
-      --accent-glow: rgba(255, 0, 85, 0.4);
-      --pill-bg: rgba(0, 255, 204, 0.05);
-      --pill-active: rgba(255, 0, 85, 0.2);
+      --accent-glow: rgba(255, 0, 85, 0.45);
+      --pill-bg: rgba(0, 255, 204, 0.04);
+      --pill-border: rgba(0, 255, 204, 0.12);
+      --pill-active: rgba(255, 0, 85, 0.25);
       --glass-nav: rgba(3, 3, 8, 0.75);
+      --glow-1: rgba(0, 255, 204, 0.15);
+      --glow-2: rgba(255, 0, 85, 0.18);
     }
 
     * {
@@ -58,11 +67,48 @@
       color: var(--text-main);
       min-height: 100vh;
       padding-bottom: 120px;
-      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+      overflow-x: hidden;
+      position: relative;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    /* Floating Ultra-Modern Header */
-    nav {
+    /* Ambient Mesh Gradient Background */
+    .bg-glow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      transition: background 0.5s ease;
+    }
+
+    .glow-orb-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: var(--glow-1);
+    }
+
+    .glow-orb-2 {
+      top: 30%;
+      right: -10%;
+      width: 45vw;
+      height: 45vw;
+      background: var(--glow-2);
+    }
+
+    /* Floating Modern Nav Header */
+    header {
       position: sticky;
       top: 24px;
       z-index: 100;
@@ -71,46 +117,53 @@
       padding: 0 24px;
     }
 
-    .nav-inner {
+    .header-inner {
       background: var(--glass-nav);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 14px 24px;
+      border-radius: 24px;
+      padding: 16px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .brand-dot {
-      width: 10px;
-      height: 10px;
+    .brand-indicator {
+      width: 8px;
+      height: 8px;
       background: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 12px var(--accent-glow);
+      box-shadow: 0 0 16px 4px var(--accent-glow);
     }
 
-    .brand h1 {
-      font-size: 1.1rem;
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title h1 {
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: -0.3px;
+      line-height: 1.2;
     }
 
-    .brand span {
+    .brand-title span {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      font-weight: 400;
-      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
-    /* Modern Control Segmented Controls (No native selects) */
+    /* Custom Controls Bar */
     .controls {
       display: flex;
       gap: 12px;
@@ -122,9 +175,9 @@
       display: flex;
       align-items: center;
       background: var(--pill-bg);
-      border: 1px solid var(--card-border);
-      padding: 3px;
-      border-radius: 12px;
+      border: 1px solid var(--pill-border);
+      padding: 4px;
+      border-radius: 14px;
     }
 
     .pill-btn {
@@ -134,9 +187,9 @@
       font-size: 0.78rem;
       font-weight: 600;
       padding: 6px 14px;
-      border-radius: 9px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .pill-btn:hover {
@@ -146,25 +199,27 @@
     .pill-btn.active {
       background: var(--pill-active);
       color: var(--text-main);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    /* Main Content Container */
+    /* Main Section */
     main {
+      position: relative;
+      z-index: 1;
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* MASONRY LAYOUT: Preserves natural image aspect ratios in columns */
+    /* Masonry Layout */
     .gallery.masonry {
       column-count: 3;
-      column-gap: var(--gap, 28px);
+      column-gap: var(--gap, 32px);
     }
 
     .gallery.masonry .card {
       break-inside: avoid;
-      margin-bottom: var(--gap, 28px);
+      margin-bottom: var(--gap, 32px);
     }
 
     .gallery.masonry .img-wrapper {
@@ -176,11 +231,11 @@
       object-fit: contain;
     }
 
-    /* GRID LAYOUT: Forces uniform aspect ratio (Uniform Square Grid) */
+    /* Uniform Grid Layout */
     .gallery.grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: var(--gap, 28px);
+      gap: var(--gap, 32px);
     }
 
     .gallery.grid .card {
@@ -196,20 +251,22 @@
       object-fit: cover;
     }
 
-    /* Ultra-Sleek Card Design */
+    /* Ultra-Sleek Glass Cards */
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
     }
 
     .card:hover {
-      transform: translateY(-8px) scale(1.01);
+      transform: translateY(-8px);
       border-color: var(--accent);
-      box-shadow: 0 20px 40px -15px var(--accent-glow);
+      box-shadow: 0 24px 48px -12px var(--accent-glow);
     }
 
     .img-wrapper {
@@ -226,15 +283,15 @@
     }
 
     .card:hover .img-wrapper img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .card-info {
-      padding: 16px 20px;
+      padding: 18px 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+      border-top: 1px solid var(--card-border);
       transition: opacity 0.3s ease;
     }
 
@@ -243,7 +300,7 @@
     }
 
     .card-info h3 {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 600;
       letter-spacing: -0.2px;
     }
@@ -251,14 +308,14 @@
     .card-tag {
       font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       color: var(--text-muted);
       font-weight: 700;
     }
 
     @media (max-width: 960px) {
       .gallery.masonry { column-count: 2; }
-      .nav-inner { flex-direction: column; gap: 16px; align-items: stretch; }
+      .header-inner { flex-direction: column; gap: 18px; align-items: stretch; }
       .controls { justify-content: space-between; }
     }
 
@@ -271,29 +328,38 @@
 </head>
 <body>
 
-  <!-- Floating Nav Controls -->
-  <nav>
-    <div class="nav-inner">
+  <!-- Background Ambient Glow -->
+  <div class="bg-glow-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+
+  <!-- Floating Nav Header -->
+  <header>
+    <div class="header-inner">
       <div class="brand">
-        <div class="brand-dot"></div>
-        <h1>Selected Works <span>/ Visuals</span></h1>
+        <div class="brand-indicator"></div>
+        <div class="brand-title">
+          <h1>Selected Works</h1>
+          <span>Visual Portfolio</span>
+        </div>
       </div>
 
       <div class="controls">
-        <!-- True Masonry vs Uniform Grid Switcher -->
+        <!-- Masonry vs Grid Switcher -->
         <div class="segmented-group">
           <button class="pill-btn active" id="btnMasonry" onclick="setLayout('masonry')">Masonry</button>
-          <button class="pill-btn" id="btnGrid" onclick="setLayout('grid')">Uniform Grid</button>
+          <button class="pill-btn" id="btnGrid" onclick="setLayout('grid')">Grid</button>
         </div>
 
-        <!-- Custom Theme Segment -->
+        <!-- Theme Selector -->
         <div class="segmented-group">
           <button class="pill-btn active" onclick="setTheme('dark', this)">Dark</button>
           <button class="pill-btn" onclick="setTheme('light', this)">Light</button>
           <button class="pill-btn" onclick="setTheme('cyberpunk', this)">Neon</button>
         </div>
 
-        <!-- Density Segment -->
+        <!-- Spacing / Density -->
         <div class="segmented-group">
           <button class="pill-btn active" onclick="setSpacing('comfortable', this)">Comfort</button>
           <button class="pill-btn" onclick="setSpacing('compact', this)">Compact</button>
@@ -305,14 +371,14 @@
         </div>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main>
     <div class="gallery masonry" id="gallery">
-      <!-- Fanta -->
+      <!-- Fanta Concept -->
       <div class="card">
         <div class="img-wrapper">
-          <img src="FANTA.png" alt="Fanta Commercial Design">
+          <img src="FANTA.png" alt="Fanta Commercial Graphic">
         </div>
         <div class="card-info">
           <h3>Fanta Commercial Concept</h3>
@@ -356,7 +422,6 @@
   </main>
 
   <script>
-    // Distinct Masonry vs Uniform Grid Logic
     function setLayout(mode) {
       const gallery = document.getElementById('gallery');
       const btnMasonry = document.getElementById('btnMasonry');
@@ -365,7 +430,7 @@
       if (mode === 'grid') {
         gallery.className = 'gallery grid';
         btnGrid.classList.add('active');
-        btnMasonry.classList.remove('active');
+        masonryBtn.classList.remove('active');
       } else {
         gallery.className = 'gallery masonry';
         btnMasonry.classList.add('active');
@@ -373,7 +438,6 @@
       }
     }
 
-    // Modern Segmented Theme Toggle
     function setTheme(theme, btn) {
       btn.parentElement.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -385,16 +449,14 @@
       }
     }
 
-    // Spacing Handler
     function setSpacing(density, btn) {
       btn.parentElement.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const root = document.documentElement;
-      root.style.setProperty('--gap', density === 'compact' ? '14px' : '28px');
+      root.style.setProperty('--gap', density === 'compact' ? '16px' : '32px');
     }
 
-    // Title Toggle
     let titlesVisible = true;
     function toggleTitles() {
       titlesVisible = !titlesVisible;
