@@ -3,54 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selected Works — Portfolio</title>
+  <title>Selected Works</title>
   <style>
-    /* Base CSS Variables & Themes */
+    /* CSS Variables & Themes */
     :root {
       --bg: #090a0f;
-      --card-bg: rgba(22, 24, 33, 0.7);
-      --card-hover: rgba(30, 34, 48, 0.9);
-      --text-main: #f1f5f9;
+      --card-bg: #12141c;
+      --card-hover: #181b26;
+      --text-main: #f8fafc;
       --text-muted: #64748b;
-      --border: rgba(255, 255, 255, 0.08);
+      --border: #1e293b;
       --accent: #ff3e3e;
-      --glow: rgba(255, 62, 62, 0.15);
-      --glass-bg: rgba(9, 10, 15, 0.75);
+      --glow: rgba(255, 62, 62, 0.12);
+      --glass-bg: rgba(9, 10, 15, 0.85);
     }
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.8);
-      --card-hover: rgba(255, 255, 255, 1);
+      --card-bg: #ffffff;
+      --card-hover: #f1f5f9;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --border: rgba(0, 0, 0, 0.08);
+      --border: #e2e8f0;
       --accent: #2563eb;
-      --glow: rgba(37, 99, 235, 0.15);
+      --glow: rgba(37, 99, 235, 0.12);
       --glass-bg: rgba(248, 250, 252, 0.85);
     }
 
     [data-theme="cyberpunk"] {
       --bg: #05050a;
-      --card-bg: rgba(15, 15, 26, 0.8);
-      --card-hover: rgba(25, 25, 45, 0.95);
+      --card-bg: #0d0e17;
+      --card-hover: #141524;
       --text-main: #00ffcc;
       --text-muted: #ff0055;
       --border: rgba(0, 255, 204, 0.2);
       --accent: #ff0055;
-      --glow: rgba(255, 0, 85, 0.3);
+      --glow: rgba(255, 0, 85, 0.25);
       --glass-bg: rgba(5, 5, 10, 0.85);
     }
 
     [data-theme="sunset"] {
       --bg: #120d1c;
-      --card-bg: rgba(30, 20, 45, 0.7);
-      --card-hover: rgba(45, 30, 65, 0.9);
+      --card-bg: #1e142d;
+      --card-hover: #291b3d;
       --text-main: #ffd166;
       --text-muted: #f72585;
       --border: rgba(255, 209, 102, 0.15);
       --accent: #f72585;
-      --glow: rgba(247, 37, 133, 0.25);
+      --glow: rgba(247, 37, 133, 0.2);
       --glass-bg: rgba(18, 13, 28, 0.85);
     }
 
@@ -64,30 +64,23 @@
       background-color: var(--bg);
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.5;
-      padding-bottom: 80px;
+      line-height: 1.6;
+      padding-bottom: 100px;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
 
-    /* Sticky Glassmorphism Header */
+    /* Clean, Organized Top Bar */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 40px;
-      margin-bottom: 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 40px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: border-color 0.4s ease;
     }
 
     .brand h1 {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       text-transform: uppercase;
@@ -95,33 +88,51 @@
 
     .brand p {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      margin-top: 2px;
     }
 
-    /* Controls Bar */
+    /* Sticky Control Toolbar */
+    .toolbar-container {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      margin-bottom: 50px;
+      transition: border-color 0.4s ease;
+    }
+
     .controls-bar {
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
-      gap: 16px;
+      gap: 24px;
       align-items: center;
+      justify-content: flex-end;
       flex-wrap: wrap;
     }
 
     .control-group {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 4px 10px;
+      padding: 6px 14px;
       border-radius: 8px;
+      transition: background 0.4s ease, border-color 0.4s ease;
     }
 
     .control-group label {
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 600;
+      letter-spacing: 0.8px;
+      font-weight: 700;
     }
 
     select, button {
@@ -137,7 +148,7 @@
     .icon-btn {
       padding: 4px 8px;
       border-radius: 4px;
-      transition: background 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .icon-btn.active {
@@ -145,30 +156,29 @@
       color: var(--accent);
     }
 
-    /* Main Container */
+    /* Main Container & Gallery */
     main {
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 40px;
-      transition: all 0.3s ease;
     }
 
     /* Masonry Mode */
     .gallery.masonry {
       column-count: 3;
-      column-gap: var(--gap, 28px);
+      column-gap: var(--gap, 36px);
     }
 
     .gallery.masonry .gallery-item {
       break-inside: avoid;
-      margin-bottom: var(--gap, 28px);
+      margin-bottom: var(--gap, 36px);
     }
 
     /* Grid Mode */
     .gallery.grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--gap, 28px);
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--gap, 36px);
     }
 
     /* Card Styling */
@@ -177,14 +187,15 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
     }
 
     .gallery-item:hover {
       transform: translateY(-6px);
+      background: var(--card-hover);
       border-color: var(--accent);
-      box-shadow: 0 12px 30px var(--glow);
+      box-shadow: 0 16px 36px var(--glow);
     }
 
     .img-container {
@@ -200,11 +211,11 @@
     }
 
     .gallery-item:hover .img-container img {
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
 
     .item-info {
-      padding: 16px 20px;
+      padding: 18px 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -227,13 +238,9 @@
     }
 
     @media (max-width: 650px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px;
-      }
-      main { padding: 0 20px; }
+      header, .toolbar-container, main { padding-left: 20px; padding-right: 20px; }
+      header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .controls-bar { justify-content: flex-start; gap: 12px; }
       .gallery.masonry { column-count: 1; }
     }
   </style>
@@ -245,18 +252,20 @@
       <h1>Selected Works</h1>
       <p>Design & Visual Artworks</p>
     </div>
+  </header>
 
+  <div class="toolbar-container">
     <div class="controls-bar">
       <!-- Layout Switcher -->
       <div class="control-group">
-        <label>Layout:</label>
+        <label>Layout</label>
         <button id="masonryBtn" class="icon-btn active" onclick="setLayout('masonry')">Masonry</button>
         <button id="gridBtn" class="icon-btn" onclick="setLayout('grid')">Grid</button>
       </div>
 
       <!-- Theme Switcher -->
       <div class="control-group">
-        <label>Theme:</label>
+        <label>Theme</label>
         <select id="themeSelect" onchange="setTheme(this.value)">
           <option value="dark">Dark</option>
           <option value="light">Light</option>
@@ -265,9 +274,9 @@
         </select>
       </div>
 
-      <!-- Density Switcher -->
+      <!-- Spacing Switcher -->
       <div class="control-group">
-        <label>Density:</label>
+        <label>Spacing</label>
         <select id="densitySelect" onchange="setDensity(this.value)">
           <option value="comfortable">Comfortable</option>
           <option value="compact">Compact</option>
@@ -276,24 +285,14 @@
 
       <!-- Info Toggle -->
       <div class="control-group">
-        <label>Titles:</label>
+        <label>Titles</label>
         <button id="titleBtn" class="icon-btn active" onclick="toggleTitles()">Show</button>
       </div>
     </div>
-  </header>
+  </div>
 
   <main>
     <div class="gallery masonry" id="gallery">
-      <!-- Joker -->
-      <div class="gallery-item">
-        <div class="img-container">
-          <img src="JOKER.png" alt="Joker Poster Design">
-        </div>
-        <div class="item-info">
-          <h3>Joker — Cinematic Edit</h3>
-        </div>
-      </div>
-
       <!-- Fanta -->
       <div class="gallery-item">
         <div class="img-container">
@@ -337,7 +336,6 @@
   </main>
 
   <script>
-    // Layout Logic
     function setLayout(mode) {
       const gallery = document.getElementById('gallery');
       const masonryBtn = document.getElementById('masonryBtn');
@@ -356,7 +354,6 @@
       }
     }
 
-    // Theme Logic
     function setTheme(theme) {
       if (theme === 'dark') {
         document.documentElement.removeAttribute('data-theme');
@@ -365,17 +362,15 @@
       }
     }
 
-    // Density / Spacing Logic
     function setDensity(density) {
       const root = document.documentElement;
       if (density === 'compact') {
-        root.style.setProperty('--gap', '14px');
+        root.style.setProperty('--gap', '18px');
       } else {
-        root.style.setProperty('--gap', '28px');
+        root.style.setProperty('--gap', '36px');
       }
     }
 
-    // Toggle Titles
     let showTitles = true;
     function toggleTitles() {
       showTitles = !showTitles;
